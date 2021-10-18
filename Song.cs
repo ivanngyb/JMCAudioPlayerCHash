@@ -19,7 +19,7 @@ namespace JMCAudioPlayer
 
         public override string ToString()
         {
-            if (SongArtist.Length > 1)
+            if (SongArtist.Length > 0)
             {
                 StringBuilder sb = new StringBuilder();
                 foreach (string s in SongArtist)
@@ -28,8 +28,11 @@ namespace JMCAudioPlayer
                 }
                 return sb.ToString() + " - " + SongTitle;
             }
-
-            return SongArtist[0] + " - " + SongTitle;
+            else
+            {
+                return "Unknown Artist - " + SongTitle;
+            }
+            
         }
 
         public Song(string url)

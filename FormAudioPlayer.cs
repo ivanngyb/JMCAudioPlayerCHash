@@ -13,12 +13,27 @@ namespace JMCAudioPlayer
     public partial class FormAudioPlayer : Form
     {
         LinkedList<Song> songs = new LinkedList<Song>();
-        string curValue;
+        Song curSong;
+        bool isPlaying = false;
+        double pos = 0;
 
         public FormAudioPlayer()
         {
             InitializeComponent();
             FormManager.pipeClient.ServerDisconnected += PipeClient_ServerDisconnected;
+            WindowsMediaPlayer.PlayStateChange += WindowsMediaPlayer_PlayStateChange;
+        }
+
+        private void WindowsMediaPlayer_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
+        {
+            if (e.newState == 1)
+            {
+                if (songs.Find(curSong).Next.Value != null)
+                {
+                    PlaySong(songs.Find(curSong).Next.Value, 0);
+                    curSong = songs.Find(curSong).Next.Value;
+                }
+            }
         }
 
         private void DisplaySong()
@@ -30,11 +45,12 @@ namespace JMCAudioPlayer
             }
         }
 
-        private void PlaySong(Song song)
+        private void PlaySong(Song song, double pos)
         {
             Console.WriteLine(song.SongURL);
             WindowsMediaPlayer.URL = song.SongURL;
             LabelCurrentSong.Text = song.ToString();
+            WindowsMediaPlayer.Ctlcontrols.currentPosition = pos;
             WindowsMediaPlayer.Ctlcontrols.play();
         }
 
@@ -57,14 +73,13 @@ namespace JMCAudioPlayer
         {
             if (OpenFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string filePath = OpenFileDialog.FileName;
-
-                if (!string.IsNullOrEmpty(filePath))
+                foreach (string s in OpenFileDialog.FileNames)
                 {
-                    Song newSong = new Song(filePath);
-                    songs.AddLast(newSong);
-                    DisplaySong();
+                    Song song = new Song(s);
+                    songs.AddLast(song);
                 }
+
+                DisplaySong();
             }
         }
 
@@ -73,10 +88,30 @@ namespace JMCAudioPlayer
             try
             {
                 
-                if (string.IsNullOrEmpty(curValue))
+                if (isPlaying == false)
                 {
-                    PlaySong(songs.First());
+                    if (curSong == null)
+                    {
+                        PlaySong(songs.First(), 0);
+                        curSong = songs.First();
+                        isPlaying = true;
+                        ButtonPlay.Text = ";";
+                    }
+                    else
+                    {
+                        PlaySong(curSong, pos);
+                        isPlaying = true;
+                        ButtonPlay.Text = ";";
+                    }
                 }
+                else
+                {
+                    pos = WindowsMediaPlayer.Ctlcontrols.currentPosition;
+                    WindowsMediaPlayer.Ctlcontrols.pause();
+                    ButtonPlay.Text = "4";
+                    isPlaying = false;
+                }
+
             }
             catch (Exception)
             {
