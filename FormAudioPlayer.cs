@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace JMCAudioPlayer
 {
-    public partial class Form1 : Form
+    public partial class FormAudioPlayer : Form
     {
-        public Form1()
+        public FormAudioPlayer()
         {
             InitializeComponent();
         }
