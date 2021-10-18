@@ -16,5 +16,19 @@ namespace JMCAudioPlayer
         {
             InitializeComponent();
         }
+
+        private void ButtonCancel_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
+
+        private void ButtonRegister_Click(object sender, EventArgs e)
+        {
+            ASCIIEncoding encoder = new ASCIIEncoding();
+
+            FormManager.pipeClient.SendMessage(encoder.GetBytes("REGISTER " + TextBoxUsername.Text + " " + TextBoxPassword.Text));
+            MessageBox.Show("User Created!");
+            this.Hide();
+        }
     }
 }

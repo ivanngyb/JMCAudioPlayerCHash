@@ -147,6 +147,7 @@ namespace JMCAudioPlayer
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ListBoxSongs);
             this.Controls.Add(this.WindowsMediaPlayer);
+            this.Enabled = false;
             this.Name = "FormAudioPlayer";
             this.Text = "FormAudioPlayer";
             ((System.ComponentModel.ISupportInitialize)(this.WindowsMediaPlayer)).EndInit();

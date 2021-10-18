@@ -90,6 +90,7 @@ namespace JMCAudioPlayer
             this.ButtonRegister.TabIndex = 3;
             this.ButtonRegister.Text = "Register";
             this.ButtonRegister.UseVisualStyleBackColor = true;
+            this.ButtonRegister.Click += new System.EventHandler(this.ButtonRegister_Click);
             // 
             // ButtonCancel
             // 
@@ -99,12 +100,14 @@ namespace JMCAudioPlayer
             this.ButtonCancel.TabIndex = 3;
             this.ButtonCancel.Text = "Cancel";
             this.ButtonCancel.UseVisualStyleBackColor = true;
+            this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
             // FormRegister
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(232, 191);
+            this.ControlBox = false;
             this.Controls.Add(this.ButtonCancel);
             this.Controls.Add(this.ButtonRegister);
             this.Controls.Add(this.TextBoxPassword);

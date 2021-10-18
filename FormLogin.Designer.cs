@@ -99,6 +99,7 @@ namespace JMCAudioPlayer
             this.ButtonRegister.TabIndex = 2;
             this.ButtonRegister.Text = "Register";
             this.ButtonRegister.UseVisualStyleBackColor = true;
+            this.ButtonRegister.Click += new System.EventHandler(this.ButtonRegister_Click);
             // 
             // FormLogin
             // 
@@ -113,7 +114,8 @@ namespace JMCAudioPlayer
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "FormLogin";
-            this.Text = "Form1";
+            this.Text = "JMC Audio Player";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLogin_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
