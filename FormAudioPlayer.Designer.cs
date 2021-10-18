@@ -40,10 +40,10 @@ namespace JMCAudioPlayer
             this.TextBoxSearch = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.WindowsMediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
+            this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.circularButton1 = new JMCAudioPlayer.CircularButton();
             this.ButtonNext = new JMCAudioPlayer.CircularButton();
             this.ButtonPlay = new JMCAudioPlayer.CircularButton();
-            this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.WindowsMediaPlayer)).BeginInit();
             this.SuspendLayout();
             // 
@@ -138,6 +138,11 @@ namespace JMCAudioPlayer
             this.WindowsMediaPlayer.TabIndex = 0;
             this.WindowsMediaPlayer.Visible = false;
             // 
+            // OpenFileDialog
+            // 
+            this.OpenFileDialog.FileName = "openFileDialog1";
+            this.OpenFileDialog.Multiselect = true;
+            // 
             // circularButton1
             // 
             this.circularButton1.BackColor = System.Drawing.SystemColors.ButtonShadow;
@@ -179,11 +184,7 @@ namespace JMCAudioPlayer
             this.ButtonPlay.TabIndex = 9;
             this.ButtonPlay.Text = "4";
             this.ButtonPlay.UseVisualStyleBackColor = false;
-            // 
-            // OpenFileDialog
-            // 
-            this.OpenFileDialog.FileName = "openFileDialog1";
-            this.OpenFileDialog.Multiselect = true;
+            this.ButtonPlay.Click += new System.EventHandler(this.ButtonPlay_Click);
             // 
             // FormAudioPlayer
             // 

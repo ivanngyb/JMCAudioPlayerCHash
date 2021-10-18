@@ -13,7 +13,7 @@ namespace JMCAudioPlayer
     public partial class FormAudioPlayer : Form
     {
         LinkedList<Song> songs = new LinkedList<Song>();
-        int curValue;
+        string curValue;
 
         public FormAudioPlayer()
         {
@@ -28,6 +28,14 @@ namespace JMCAudioPlayer
             {
                 ListBoxSongs.Items.Add(song.ToString());
             }
+        }
+
+        private void PlaySong(Song song)
+        {
+            Console.WriteLine(song.SongURL);
+            WindowsMediaPlayer.URL = song.SongURL;
+            LabelCurrentSong.Text = song.ToString();
+            WindowsMediaPlayer.Ctlcontrols.play();
         }
 
         private void PipeClient_ServerDisconnected()
@@ -57,6 +65,23 @@ namespace JMCAudioPlayer
                     songs.AddLast(newSong);
                     DisplaySong();
                 }
+            }
+        }
+
+        private void ButtonPlay_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                if (string.IsNullOrEmpty(curValue))
+                {
+                    PlaySong(songs.First());
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

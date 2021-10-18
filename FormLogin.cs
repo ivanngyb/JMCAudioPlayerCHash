@@ -41,6 +41,8 @@ namespace JMCAudioPlayer
             {
                 Console.WriteLine("Login success!");
                 FormAudioPlayer audioPlayer = new FormAudioPlayer();
+                audioPlayer.StartPosition = FormStartPosition.Manual;
+                audioPlayer.Location = this.Location;
                 audioPlayer.Show();
                 this.Hide();
             }
@@ -59,6 +61,8 @@ namespace JMCAudioPlayer
         private void ButtonRegister_Click(object sender, EventArgs e)
         {
             FormRegister formRegister = new FormRegister();
+            formRegister.StartPosition = FormStartPosition.Manual;
+            formRegister.Location = this.Location;
             formRegister.ShowDialog();
         }
 

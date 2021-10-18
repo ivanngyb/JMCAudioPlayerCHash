@@ -37,6 +37,7 @@ namespace JMCAudioPlayer
             var tfile = TagLib.File.Create(@url);
             SongTitle = tfile.Tag.Title;
             SongArtist = tfile.Tag.AlbumArtists;
+            SongURL = url;
         }
     }
 }
