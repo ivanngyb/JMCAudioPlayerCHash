@@ -26,7 +26,7 @@ namespace JMCAudioPlayer
         {
             ASCIIEncoding encoder = new ASCIIEncoding();
 
-            FormManager.pipeClient.SendMessage(encoder.GetBytes("REGISTER " + TextBoxUsername.Text + " " + TextBoxPassword.Text));
+            FormManager.pipeClient.SendMessage(encoder.GetBytes("REGISTER " + TextBoxUsername.Text + " " + FormManager.GenerateSHA512String(TextBoxPassword.Text)));
             MessageBox.Show("User Created!");
             this.Hide();
         }

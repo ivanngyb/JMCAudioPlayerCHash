@@ -36,6 +36,7 @@ namespace JMCAudioPlayer
             this.TextBoxPassword = new System.Windows.Forms.TextBox();
             this.ButtonLogin = new System.Windows.Forms.Button();
             this.ButtonRegister = new System.Windows.Forms.Button();
+            this.LabelFeedback = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -52,7 +53,7 @@ namespace JMCAudioPlayer
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label2.Location = new System.Drawing.Point(22, 45);
+            this.label2.Location = new System.Drawing.Point(22, 61);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 17);
             this.label2.TabIndex = 0;
@@ -62,7 +63,7 @@ namespace JMCAudioPlayer
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label3.Location = new System.Drawing.Point(22, 77);
+            this.label3.Location = new System.Drawing.Point(22, 93);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 17);
             this.label3.TabIndex = 0;
@@ -70,30 +71,31 @@ namespace JMCAudioPlayer
             // 
             // TextBoxUsername
             // 
-            this.TextBoxUsername.Location = new System.Drawing.Point(106, 45);
+            this.TextBoxUsername.Location = new System.Drawing.Point(106, 61);
             this.TextBoxUsername.Name = "TextBoxUsername";
             this.TextBoxUsername.Size = new System.Drawing.Size(100, 20);
             this.TextBoxUsername.TabIndex = 1;
             // 
             // TextBoxPassword
             // 
-            this.TextBoxPassword.Location = new System.Drawing.Point(106, 76);
+            this.TextBoxPassword.Location = new System.Drawing.Point(106, 92);
             this.TextBoxPassword.Name = "TextBoxPassword";
             this.TextBoxPassword.Size = new System.Drawing.Size(100, 20);
             this.TextBoxPassword.TabIndex = 1;
             // 
             // ButtonLogin
             // 
-            this.ButtonLogin.Location = new System.Drawing.Point(25, 111);
+            this.ButtonLogin.Location = new System.Drawing.Point(25, 128);
             this.ButtonLogin.Name = "ButtonLogin";
             this.ButtonLogin.Size = new System.Drawing.Size(181, 23);
             this.ButtonLogin.TabIndex = 2;
             this.ButtonLogin.Text = "Login";
             this.ButtonLogin.UseVisualStyleBackColor = true;
+            this.ButtonLogin.Click += new System.EventHandler(this.ButtonLogin_Click);
             // 
             // ButtonRegister
             // 
-            this.ButtonRegister.Location = new System.Drawing.Point(25, 140);
+            this.ButtonRegister.Location = new System.Drawing.Point(25, 157);
             this.ButtonRegister.Name = "ButtonRegister";
             this.ButtonRegister.Size = new System.Drawing.Size(181, 23);
             this.ButtonRegister.TabIndex = 2;
@@ -101,11 +103,22 @@ namespace JMCAudioPlayer
             this.ButtonRegister.UseVisualStyleBackColor = true;
             this.ButtonRegister.Click += new System.EventHandler(this.ButtonRegister_Click);
             // 
+            // LabelFeedback
+            // 
+            this.LabelFeedback.Location = new System.Drawing.Point(12, 37);
+            this.LabelFeedback.Name = "LabelFeedback";
+            this.LabelFeedback.Size = new System.Drawing.Size(204, 21);
+            this.LabelFeedback.TabIndex = 3;
+            this.LabelFeedback.Text = "FEEDBACK";
+            this.LabelFeedback.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LabelFeedback.Visible = false;
+            // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(228, 178);
+            this.ClientSize = new System.Drawing.Size(228, 204);
+            this.Controls.Add(this.LabelFeedback);
             this.Controls.Add(this.ButtonRegister);
             this.Controls.Add(this.ButtonLogin);
             this.Controls.Add(this.TextBoxPassword);
@@ -130,6 +143,7 @@ namespace JMCAudioPlayer
         private System.Windows.Forms.TextBox TextBoxPassword;
         private System.Windows.Forms.Button ButtonLogin;
         private System.Windows.Forms.Button ButtonRegister;
+        private System.Windows.Forms.Label LabelFeedback;
     }
 }
 

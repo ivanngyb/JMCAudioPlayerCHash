@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,6 +14,7 @@ namespace JMCAudioPlayer
         Form formPlayer;
         Form formLogin;
         public static PipeClient pipeClient = new PipeClient();
+
 
         private void onFormClosed(object sender, EventArgs e)
         {
@@ -33,10 +35,23 @@ namespace JMCAudioPlayer
         public static FormManager Current => _current.Value;
 
         public FormManager() {
-            formPlayer = CreateForm<FormAudioPlayer>();
-            formPlayer.Show();
             formLogin = CreateForm<FormLogin>();
-            formLogin.ShowDialog();
+            formLogin.Show();
         }
+
+        public static string GenerateSHA512String(string inputString)
+        {
+            SHA512 sha512 = SHA512Managed.Create();
+            byte[] bytes = Encoding.UTF8.GetBytes(inputString);
+            byte[] hash = sha512.ComputeHash(bytes);
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                result.Append(hash[i].ToString("X2"));
+            }
+
+            return result.ToString();
+        }
+
     }
 }

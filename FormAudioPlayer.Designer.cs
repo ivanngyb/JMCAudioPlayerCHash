@@ -30,7 +30,6 @@ namespace JMCAudioPlayer
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAudioPlayer));
-            this.WindowsMediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
             this.ListBoxSongs = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.LabelCurrentSong = new System.Windows.Forms.Label();
@@ -40,22 +39,18 @@ namespace JMCAudioPlayer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.TextBoxSearch = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.WindowsMediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
+            this.circularButton1 = new JMCAudioPlayer.CircularButton();
+            this.ButtonNext = new JMCAudioPlayer.CircularButton();
+            this.ButtonPlay = new JMCAudioPlayer.CircularButton();
+            this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.WindowsMediaPlayer)).BeginInit();
             this.SuspendLayout();
-            // 
-            // WindowsMediaPlayer
-            // 
-            this.WindowsMediaPlayer.Enabled = true;
-            this.WindowsMediaPlayer.Location = new System.Drawing.Point(11, 384);
-            this.WindowsMediaPlayer.Name = "WindowsMediaPlayer";
-            this.WindowsMediaPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("WindowsMediaPlayer.OcxState")));
-            this.WindowsMediaPlayer.Size = new System.Drawing.Size(218, 34);
-            this.WindowsMediaPlayer.TabIndex = 0;
             // 
             // ListBoxSongs
             // 
             this.ListBoxSongs.FormattingEnabled = true;
-            this.ListBoxSongs.Location = new System.Drawing.Point(12, 41);
+            this.ListBoxSongs.Location = new System.Drawing.Point(12, 38);
             this.ListBoxSongs.Name = "ListBoxSongs";
             this.ListBoxSongs.Size = new System.Drawing.Size(384, 303);
             this.ListBoxSongs.TabIndex = 1;
@@ -74,7 +69,7 @@ namespace JMCAudioPlayer
             // 
             this.LabelCurrentSong.AutoSize = true;
             this.LabelCurrentSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.LabelCurrentSong.Location = new System.Drawing.Point(104, 356);
+            this.LabelCurrentSong.Location = new System.Drawing.Point(95, 356);
             this.LabelCurrentSong.Name = "LabelCurrentSong";
             this.LabelCurrentSong.Size = new System.Drawing.Size(69, 17);
             this.LabelCurrentSong.TabIndex = 2;
@@ -88,6 +83,7 @@ namespace JMCAudioPlayer
             this.ButtonLoadSong.TabIndex = 3;
             this.ButtonLoadSong.Text = "Load Songs";
             this.ButtonLoadSong.UseVisualStyleBackColor = true;
+            this.ButtonLoadSong.Click += new System.EventHandler(this.ButtonLoadSong_Click);
             // 
             // ButtonWriteSongs
             // 
@@ -110,7 +106,7 @@ namespace JMCAudioPlayer
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 432);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 441);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(408, 22);
             this.statusStrip1.TabIndex = 6;
@@ -132,11 +128,71 @@ namespace JMCAudioPlayer
             this.label3.TabIndex = 8;
             this.label3.Text = "Search Title:";
             // 
+            // WindowsMediaPlayer
+            // 
+            this.WindowsMediaPlayer.Enabled = true;
+            this.WindowsMediaPlayer.Location = new System.Drawing.Point(172, 355);
+            this.WindowsMediaPlayer.Name = "WindowsMediaPlayer";
+            this.WindowsMediaPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("WindowsMediaPlayer.OcxState")));
+            this.WindowsMediaPlayer.Size = new System.Drawing.Size(218, 34);
+            this.WindowsMediaPlayer.TabIndex = 0;
+            this.WindowsMediaPlayer.Visible = false;
+            // 
+            // circularButton1
+            // 
+            this.circularButton1.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.circularButton1.FlatAppearance.BorderSize = 0;
+            this.circularButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.circularButton1.Font = new System.Drawing.Font("Webdings", 25F);
+            this.circularButton1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.circularButton1.Location = new System.Drawing.Point(11, 383);
+            this.circularButton1.Name = "circularButton1";
+            this.circularButton1.Size = new System.Drawing.Size(45, 45);
+            this.circularButton1.TabIndex = 9;
+            this.circularButton1.Text = "7";
+            this.circularButton1.UseVisualStyleBackColor = false;
+            // 
+            // ButtonNext
+            // 
+            this.ButtonNext.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.ButtonNext.FlatAppearance.BorderSize = 0;
+            this.ButtonNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonNext.Font = new System.Drawing.Font("Webdings", 25F);
+            this.ButtonNext.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.ButtonNext.Location = new System.Drawing.Point(128, 383);
+            this.ButtonNext.Name = "ButtonNext";
+            this.ButtonNext.Size = new System.Drawing.Size(45, 45);
+            this.ButtonNext.TabIndex = 9;
+            this.ButtonNext.Text = "8";
+            this.ButtonNext.UseVisualStyleBackColor = false;
+            // 
+            // ButtonPlay
+            // 
+            this.ButtonPlay.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.ButtonPlay.FlatAppearance.BorderSize = 0;
+            this.ButtonPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonPlay.Font = new System.Drawing.Font("Webdings", 30F);
+            this.ButtonPlay.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.ButtonPlay.Location = new System.Drawing.Point(67, 380);
+            this.ButtonPlay.Name = "ButtonPlay";
+            this.ButtonPlay.Size = new System.Drawing.Size(50, 50);
+            this.ButtonPlay.TabIndex = 9;
+            this.ButtonPlay.Text = "4";
+            this.ButtonPlay.UseVisualStyleBackColor = false;
+            // 
+            // OpenFileDialog
+            // 
+            this.OpenFileDialog.FileName = "openFileDialog1";
+            this.OpenFileDialog.Multiselect = true;
+            // 
             // FormAudioPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(408, 454);
+            this.ClientSize = new System.Drawing.Size(408, 463);
+            this.Controls.Add(this.circularButton1);
+            this.Controls.Add(this.ButtonNext);
+            this.Controls.Add(this.ButtonPlay);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.TextBoxSearch);
             this.Controls.Add(this.statusStrip1);
@@ -147,9 +203,9 @@ namespace JMCAudioPlayer
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ListBoxSongs);
             this.Controls.Add(this.WindowsMediaPlayer);
-            this.Enabled = false;
             this.Name = "FormAudioPlayer";
             this.Text = "FormAudioPlayer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAudioPlayer_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.WindowsMediaPlayer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -168,5 +224,9 @@ namespace JMCAudioPlayer
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.TextBox TextBoxSearch;
         private System.Windows.Forms.Label label3;
+        private CircularButton ButtonPlay;
+        private CircularButton ButtonNext;
+        private CircularButton circularButton1;
+        private System.Windows.Forms.OpenFileDialog OpenFileDialog;
     }
 }
