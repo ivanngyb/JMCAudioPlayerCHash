@@ -41,7 +41,7 @@ namespace JMCAudioPlayer
             this.label3 = new System.Windows.Forms.Label();
             this.WindowsMediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
             this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.circularButton1 = new JMCAudioPlayer.CircularButton();
+            this.ButtonPrevious = new JMCAudioPlayer.CircularButton();
             this.ButtonNext = new JMCAudioPlayer.CircularButton();
             this.ButtonPlay = new JMCAudioPlayer.CircularButton();
             ((System.ComponentModel.ISupportInitialize)(this.WindowsMediaPlayer)).BeginInit();
@@ -140,22 +140,23 @@ namespace JMCAudioPlayer
             // 
             // OpenFileDialog
             // 
-            this.OpenFileDialog.FileName = "openFileDialog1";
+            this.OpenFileDialog.Filter = "Music (.mp3)|*.mp3";
             this.OpenFileDialog.Multiselect = true;
             // 
-            // circularButton1
+            // ButtonPrevious
             // 
-            this.circularButton1.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.circularButton1.FlatAppearance.BorderSize = 0;
-            this.circularButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.circularButton1.Font = new System.Drawing.Font("Webdings", 25F);
-            this.circularButton1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.circularButton1.Location = new System.Drawing.Point(11, 383);
-            this.circularButton1.Name = "circularButton1";
-            this.circularButton1.Size = new System.Drawing.Size(45, 45);
-            this.circularButton1.TabIndex = 9;
-            this.circularButton1.Text = "7";
-            this.circularButton1.UseVisualStyleBackColor = false;
+            this.ButtonPrevious.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.ButtonPrevious.FlatAppearance.BorderSize = 0;
+            this.ButtonPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonPrevious.Font = new System.Drawing.Font("Webdings", 25F);
+            this.ButtonPrevious.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.ButtonPrevious.Location = new System.Drawing.Point(11, 383);
+            this.ButtonPrevious.Name = "ButtonPrevious";
+            this.ButtonPrevious.Size = new System.Drawing.Size(45, 45);
+            this.ButtonPrevious.TabIndex = 9;
+            this.ButtonPrevious.Text = "7";
+            this.ButtonPrevious.UseVisualStyleBackColor = false;
+            this.ButtonPrevious.Click += new System.EventHandler(this.ButtonPrevious_Click);
             // 
             // ButtonNext
             // 
@@ -170,6 +171,7 @@ namespace JMCAudioPlayer
             this.ButtonNext.TabIndex = 9;
             this.ButtonNext.Text = "8";
             this.ButtonNext.UseVisualStyleBackColor = false;
+            this.ButtonNext.Click += new System.EventHandler(this.ButtonNext_Click);
             // 
             // ButtonPlay
             // 
@@ -191,7 +193,7 @@ namespace JMCAudioPlayer
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(408, 463);
-            this.Controls.Add(this.circularButton1);
+            this.Controls.Add(this.ButtonPrevious);
             this.Controls.Add(this.ButtonNext);
             this.Controls.Add(this.ButtonPlay);
             this.Controls.Add(this.label3);
@@ -227,7 +229,7 @@ namespace JMCAudioPlayer
         private System.Windows.Forms.Label label3;
         private CircularButton ButtonPlay;
         private CircularButton ButtonNext;
-        private CircularButton circularButton1;
+        private CircularButton ButtonPrevious;
         private System.Windows.Forms.OpenFileDialog OpenFileDialog;
     }
 }

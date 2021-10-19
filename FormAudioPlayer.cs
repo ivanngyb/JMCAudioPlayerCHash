@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace JMCAudioPlayer
@@ -21,18 +22,29 @@ namespace JMCAudioPlayer
         {
             InitializeComponent();
             FormManager.pipeClient.ServerDisconnected += PipeClient_ServerDisconnected;
-            WindowsMediaPlayer.PlayStateChange += WindowsMediaPlayer_PlayStateChange;
+            WindowsMediaPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(WindowsMediaPlayer_PlayStateChange);
         }
 
         private void WindowsMediaPlayer_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
         {
             if (e.newState == 1)
             {
-                if (songs.Find(curSong).Next.Value != null)
+                if (songs.Find(curSong).Next != null)
                 {
-                    PlaySong(songs.Find(curSong).Next.Value, 0);
+                    WindowsMediaPlayer.URL = songs.Find(curSong).Next.Value.SongURL;
+                    WindowsMediaPlayer.Ctlcontrols.play();
                     curSong = songs.Find(curSong).Next.Value;
+                    //PlaySong(songs.Find(curSong).Next.Value, 0);
                 }
+                else
+                {
+                    PlaySong(songs.First(), 0);
+                }
+            }
+            else if (e.newState == 1)
+            {
+                ButtonPlay.Text = "4";
+                isPlaying = false;
             }
         }
 
@@ -47,11 +59,11 @@ namespace JMCAudioPlayer
 
         private void PlaySong(Song song, double pos)
         {
-            Console.WriteLine(song.SongURL);
+            curSong = song;
             WindowsMediaPlayer.URL = song.SongURL;
-            LabelCurrentSong.Text = song.ToString();
             WindowsMediaPlayer.Ctlcontrols.currentPosition = pos;
             WindowsMediaPlayer.Ctlcontrols.play();
+            LabelCurrentSong.Text = song.ToString();
         }
 
         private void PipeClient_ServerDisconnected()
@@ -93,7 +105,6 @@ namespace JMCAudioPlayer
                     if (curSong == null)
                     {
                         PlaySong(songs.First(), 0);
-                        curSong = songs.First();
                         isPlaying = true;
                         ButtonPlay.Text = ";";
                     }
@@ -118,6 +129,35 @@ namespace JMCAudioPlayer
 
                 throw;
             }
+        }
+
+        private void ButtonNext_Click(object sender, EventArgs e)
+        {
+            if (songs.Find(curSong).Next != null)
+            {
+                PlaySong(songs.Find(curSong).Next.Value, 0);
+            }
+            else
+            {
+                PlaySong(songs.First(), 0);
+            }
+        }
+
+        private void ButtonPrevious_Click(object sender, EventArgs e)
+        {
+            if (songs.Find(curSong).Previous != null)
+            {
+                PlaySong(songs.Find(curSong).Previous.Value, 0);
+            }
+            else
+            {
+                PlaySong(songs.Last(), 0);
+            }
+        }
+
+        private void circularButton1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
