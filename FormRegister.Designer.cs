@@ -73,7 +73,7 @@ namespace JMCAudioPlayer
             this.TextBoxUsername.Location = new System.Drawing.Point(109, 51);
             this.TextBoxUsername.Name = "TextBoxUsername";
             this.TextBoxUsername.Size = new System.Drawing.Size(100, 20);
-            this.TextBoxUsername.TabIndex = 2;
+            this.TextBoxUsername.TabIndex = 1;
             // 
             // TextBoxPassword
             // 
@@ -97,7 +97,7 @@ namespace JMCAudioPlayer
             this.ButtonCancel.Location = new System.Drawing.Point(28, 155);
             this.ButtonCancel.Name = "ButtonCancel";
             this.ButtonCancel.Size = new System.Drawing.Size(181, 23);
-            this.ButtonCancel.TabIndex = 3;
+            this.ButtonCancel.TabIndex = 4;
             this.ButtonCancel.Text = "Cancel";
             this.ButtonCancel.UseVisualStyleBackColor = true;
             this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
@@ -117,6 +117,7 @@ namespace JMCAudioPlayer
             this.Controls.Add(this.label1);
             this.Name = "FormRegister";
             this.Text = "FormRegister";
+            this.Load += new System.EventHandler(this.FormRegister_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

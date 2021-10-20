@@ -81,14 +81,15 @@ namespace JMCAudioPlayer
             this.TextBoxPassword.Location = new System.Drawing.Point(106, 92);
             this.TextBoxPassword.Name = "TextBoxPassword";
             this.TextBoxPassword.Size = new System.Drawing.Size(100, 20);
-            this.TextBoxPassword.TabIndex = 1;
+            this.TextBoxPassword.TabIndex = 2;
+            this.TextBoxPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxPassword_KeyPress);
             // 
             // ButtonLogin
             // 
             this.ButtonLogin.Location = new System.Drawing.Point(25, 128);
             this.ButtonLogin.Name = "ButtonLogin";
             this.ButtonLogin.Size = new System.Drawing.Size(181, 23);
-            this.ButtonLogin.TabIndex = 2;
+            this.ButtonLogin.TabIndex = 3;
             this.ButtonLogin.Text = "Login";
             this.ButtonLogin.UseVisualStyleBackColor = true;
             this.ButtonLogin.Click += new System.EventHandler(this.ButtonLogin_Click);
@@ -98,7 +99,7 @@ namespace JMCAudioPlayer
             this.ButtonRegister.Location = new System.Drawing.Point(25, 157);
             this.ButtonRegister.Name = "ButtonRegister";
             this.ButtonRegister.Size = new System.Drawing.Size(181, 23);
-            this.ButtonRegister.TabIndex = 2;
+            this.ButtonRegister.TabIndex = 4;
             this.ButtonRegister.Text = "Register";
             this.ButtonRegister.UseVisualStyleBackColor = true;
             this.ButtonRegister.Click += new System.EventHandler(this.ButtonRegister_Click);
@@ -129,6 +130,7 @@ namespace JMCAudioPlayer
             this.Name = "FormLogin";
             this.Text = "JMC Audio Player";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLogin_FormClosing);
+            this.Load += new System.EventHandler(this.FormLogin_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

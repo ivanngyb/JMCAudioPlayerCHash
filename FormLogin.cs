@@ -40,6 +40,7 @@ namespace JMCAudioPlayer
             if (str.Equals("LOGIN_SUCCESS"))
             {
                 Console.WriteLine("Login success!");
+                FormManager.CurrentUserName = TextBoxUsername.Text;
                 FormAudioPlayer audioPlayer = new FormAudioPlayer();
                 audioPlayer.StartPosition = FormStartPosition.Manual;
                 audioPlayer.Location = this.Location;
@@ -78,6 +79,19 @@ namespace JMCAudioPlayer
             FormManager.pipeClient.SendMessage(encoder.GetBytes("LOGIN " + TextBoxUsername.Text + " " + FormManager.GenerateSHA512String(TextBoxPassword.Text)));
         }
 
+        private void TextBoxPassword_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                ASCIIEncoding encoder = new ASCIIEncoding();
 
+                FormManager.pipeClient.SendMessage(encoder.GetBytes("LOGIN " + TextBoxUsername.Text + " " + FormManager.GenerateSHA512String(TextBoxPassword.Text)));
+            }
+        }
+
+        private void FormLogin_Load(object sender, EventArgs e)
+        {
+            FormManager.currentForm = this;
+        }
     }
 }

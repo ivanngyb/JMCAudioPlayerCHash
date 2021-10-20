@@ -30,5 +30,10 @@ namespace JMCAudioPlayer
             MessageBox.Show("User Created!");
             this.Hide();
         }
+
+        private void FormRegister_Load(object sender, EventArgs e)
+        {
+            FormManager.currentForm = this;
+        }
     }
 }

@@ -74,6 +74,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinarySearcher.cs" />
     <Compile Include="CircularButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -90,12 +91,19 @@
       <DependentUpon>FormAudioPlayer.cs</DependentUpon>
     </Compile>
     <Compile Include="FormManager.cs" />
+    <Compile Include="FormReconnect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReconnect.Designer.cs">
+      <DependentUpon>FormReconnect.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormRegister.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormRegister.Designer.cs">
       <DependentUpon>FormRegister.cs</DependentUpon>
     </Compile>
+    <Compile Include="MergeSorter.cs" />
     <Compile Include="PipeClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReconnect.resx">
+      <DependentUpon>FormReconnect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormRegister.resx">
       <DependentUpon>FormRegister.cs</DependentUpon>

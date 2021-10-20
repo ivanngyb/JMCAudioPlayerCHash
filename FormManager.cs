@@ -13,8 +13,9 @@ namespace JMCAudioPlayer
 
         Form formPlayer;
         Form formLogin;
+        public static Form currentForm { get; set; }
         public static PipeClient pipeClient = new PipeClient();
-
+        public static string CurrentUserName;
 
         private void onFormClosed(object sender, EventArgs e)
         {
@@ -35,8 +36,17 @@ namespace JMCAudioPlayer
         public static FormManager Current => _current.Value;
 
         public FormManager() {
+            FormManager.pipeClient.ServerDisconnected += PipeClient_ServerDisconnected;
             formLogin = CreateForm<FormLogin>();
             formLogin.Show();
+        }
+
+        private void PipeClient_ServerDisconnected()
+        {
+            FormReconnect formReconnect = CreateForm<FormReconnect>();
+            formReconnect.StartPosition = FormStartPosition.Manual;
+            formReconnect.Location = currentForm.Location;
+            formReconnect.ShowDialog();
         }
 
         public static string GenerateSHA512String(string inputString)

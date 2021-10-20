@@ -14,6 +14,8 @@ namespace JMCAudioPlayer
     public partial class FormAudioPlayer : Form
     {
         LinkedList<Song> songs = new LinkedList<Song>();
+        MergeSorter mergeSorter = new MergeSorter();
+        BinarySearcher binarySearcher = new BinarySearcher();
         Song curSong;
         bool isPlaying = false;
         double pos = 0;
@@ -21,7 +23,6 @@ namespace JMCAudioPlayer
         public FormAudioPlayer()
         {
             InitializeComponent();
-            FormManager.pipeClient.ServerDisconnected += PipeClient_ServerDisconnected;
             WindowsMediaPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(WindowsMediaPlayer_PlayStateChange);
         }
 
@@ -41,11 +42,18 @@ namespace JMCAudioPlayer
                     PlaySong(songs.First(), 0);
                 }
             }
-            else if (e.newState == 1)
-            {
-                ButtonPlay.Text = "4";
+            else if (e.newState == 1) 
+            { 
                 isPlaying = false;
             }
+        }
+
+        private void SortSongs()
+        {
+            Song[] sortedSongs = mergeSorter.MergeSort(songs.ToArray());
+            songs.Clear();
+            songs = new LinkedList<Song>(sortedSongs);
+            DisplaySong();
         }
 
         private void DisplaySong()
@@ -66,9 +74,48 @@ namespace JMCAudioPlayer
             LabelCurrentSong.Text = song.ToString();
         }
 
-        private void PipeClient_ServerDisconnected()
+        private void PlayPause()
         {
-            Invoke(new PipeClient.ServerDisconnectedHandler(ServerDisconnected));
+            try
+            {
+
+                if (isPlaying == false)
+                {
+                    if (curSong == null)
+                    {
+                        PlaySong(songs.First(), 0);
+                        isPlaying = true;
+                    }
+                    else
+                    {
+                        PlaySong(curSong, pos);
+                        isPlaying = true;
+                    }
+                }
+                else
+                {
+                    pos = WindowsMediaPlayer.Ctlcontrols.currentPosition;
+                    WindowsMediaPlayer.Ctlcontrols.pause();
+                    isPlaying = false;
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private int GetLinkedListIndex<Song>(LinkedList<Song> songs, Song item) 
+        {
+            var count = 0;
+            for (var node = songs.First; node != null; node = node.Next, count++)
+            {
+                if (item.Equals(node.Value))
+                    return count;
+            }
+            return -1;
         }
 
         void ServerDisconnected()
@@ -85,50 +132,22 @@ namespace JMCAudioPlayer
         {
             if (OpenFileDialog.ShowDialog() == DialogResult.OK)
             {
-                foreach (string s in OpenFileDialog.FileNames)
+                if (!string.IsNullOrEmpty(OpenFileDialog.FileName))
                 {
-                    Song song = new Song(s);
-                    songs.AddLast(song);
-                }
+                    foreach (string s in OpenFileDialog.FileNames)
+                    {
+                        Song song = new Song(s);
+                        songs.AddLast(song);
+                    }
 
-                DisplaySong();
+                    SortSongs();
+                }
             }
         }
 
         private void ButtonPlay_Click(object sender, EventArgs e)
         {
-            try
-            {
-                
-                if (isPlaying == false)
-                {
-                    if (curSong == null)
-                    {
-                        PlaySong(songs.First(), 0);
-                        isPlaying = true;
-                        ButtonPlay.Text = ";";
-                    }
-                    else
-                    {
-                        PlaySong(curSong, pos);
-                        isPlaying = true;
-                        ButtonPlay.Text = ";";
-                    }
-                }
-                else
-                {
-                    pos = WindowsMediaPlayer.Ctlcontrols.currentPosition;
-                    WindowsMediaPlayer.Ctlcontrols.pause();
-                    ButtonPlay.Text = "4";
-                    isPlaying = false;
-                }
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            PlayPause();
         }
 
         private void ButtonNext_Click(object sender, EventArgs e)
@@ -155,9 +174,32 @@ namespace JMCAudioPlayer
             }
         }
 
-        private void circularButton1_Click(object sender, EventArgs e)
+        private void TextBoxSearch_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                (Song, bool) result = binarySearcher.BinarySearch(songs.ToArray<Song>(), TextBoxSearch.Text);
+                if (result.Item2)
+                {
+                    ListBoxSongs.SelectedIndex = GetLinkedListIndex<Song>(songs, result.Item1);
+                    TextBoxSearch.Clear();
+                }
+                else
+                {
+                    MessageBox.Show("Song title not found");
+                    TextBoxSearch.Focus();
+                }
+            }
+        }
 
+        private void FormAudioPlayer_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            PlayPause();
+        }
+
+        private void FormAudioPlayer_Load(object sender, EventArgs e)
+        {
+            FormManager.currentForm = this;
         }
     }
 }
