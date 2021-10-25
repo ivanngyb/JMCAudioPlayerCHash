@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="JMCAudioPlayer.BinarySearcher">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BinarySearcher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JMCAudioPlayer.FormAudioPlayer">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QACIDAAYACSABlQAAACBAIgGCUAEAABEAAAiEABgGgI=</HashCode>
+      <FileName>FormAudioPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JMCAudioPlayer.FormLogin">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAQAAAAQCAAABAAQACIEAACAAAAEAAAAAEAAEEAAAI=</HashCode>
+      <FileName>FormLogin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JMCAudioPlayer.FormManager">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAQCAAAGAACIAAAAAAAAAABBABAAAAAA=</HashCode>
+      <FileName>FormManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JMCAudioPlayer.FormReconnect">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAIRAIAACAAAACAAAIAAAAAAQIAAAEAAA=</HashCode>
+      <FileName>FormReconnect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JMCAudioPlayer.FormRegister">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAQAAAAUCAAABAAAACCAAACAAQAAAAAAAEAAAEAAAI=</HashCode>
+      <FileName>FormRegister.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JMCAudioPlayer.MergeSorter">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>MergeSorter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JMCAudioPlayer.PipeClient">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="JMCAudioPlayer.PipeClient.MessageReceivedHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PipeClient.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="JMCAudioPlayer.PipeClient.ServerDisconnectedHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PipeClient.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="JMCAudioPlayer.PipeClient.StreamReadyHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>PipeClient.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AwQAAAAAQAAAUAAAQCQAAIAgCAAAAAAACAACAAAAAAA=</HashCode>
+      <FileName>PipeClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JMCAudioPlayer.Song" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAACABAAAAAAQEAACQAgIAAAACAAAAAAEAAAAABQA=</HashCode>
+      <FileName>Song.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
