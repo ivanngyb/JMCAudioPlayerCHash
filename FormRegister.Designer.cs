@@ -106,7 +106,7 @@ namespace JMCAudioPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(232, 191);
+            this.ClientSize = new System.Drawing.Size(237, 247);
             this.ControlBox = false;
             this.Controls.Add(this.ButtonCancel);
             this.Controls.Add(this.ButtonRegister);
