@@ -8,6 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
+using CsvHelper;
+using System.IO;
+using System.Globalization;
+
+//Student ID: 30031552
+//Student Name: Yang Beng Ng(Ivan)
+//Date: 25/10/2021
+//Description: An advance audio player with login capabilities and song saving
 
 namespace JMCAudioPlayer
 {
@@ -17,6 +25,7 @@ namespace JMCAudioPlayer
         MergeSorter mergeSorter = new MergeSorter();
         BinarySearcher binarySearcher = new BinarySearcher();
         Song curSong;
+        string usersSongsPath = "Users Songs";
         bool isPlaying = false;
         double pos = 0;
 
@@ -28,23 +37,35 @@ namespace JMCAudioPlayer
 
         private void WindowsMediaPlayer_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
         {
-            if (e.newState == 1)
+            if (e.newState == 1 || e.newState == 2)
             {
-                if (songs.Find(curSong).Next != null)
-                {
-                    WindowsMediaPlayer.URL = songs.Find(curSong).Next.Value.SongURL;
-                    WindowsMediaPlayer.Ctlcontrols.play();
-                    curSong = songs.Find(curSong).Next.Value;
-                    //PlaySong(songs.Find(curSong).Next.Value, 0);
-                }
-                else
-                {
-                    PlaySong(songs.First(), 0);
-                }
-            }
-            else if (e.newState == 1) 
-            { 
+                LabelCurrentSong.Text = "Nothing playing";
+                ButtonPlay.Text = "4";
+                ListBoxSongs.SelectedIndex = -1;
                 isPlaying = false;
+            }
+            else if (e.newState == 3)
+            {
+                isPlaying = true;
+                ButtonPlay.Text = ";";
+                ListBoxSongs.SelectedIndex = GetLinkedListIndex<Song>(songs, curSong);
+            }
+            else if (e.newState == 8)
+            {
+                BeginInvoke(new Action(() => {
+                    if (songs.Find(curSong).Next != null)
+                    {
+                        WindowsMediaPlayer.URL = songs.Find(curSong).Next.Value.SongURL;
+                        curSong = songs.Find(curSong).Next.Value;
+                        PlaySong(curSong, 0);
+                    }
+                    else
+                    {
+                        WindowsMediaPlayer.URL = songs.First.Value.SongURL;
+                        curSong = songs.First();
+                        PlaySong(curSong, 0);
+                    }
+                }));
             }
         }
 
@@ -118,13 +139,29 @@ namespace JMCAudioPlayer
             return -1;
         }
 
-        void ServerDisconnected()
+        private void WriteSongs(string user)
         {
-            MessageBox.Show("Lost connection to server!");
+            string fileName = user + ".csv";
+            if (!File.Exists(usersSongsPath))
+            {
+                Directory.CreateDirectory(usersSongsPath);
+            }
+
+            fileName = Path.Combine(usersSongsPath, fileName);
+            
+
+            using (var writer = new StreamWriter(fileName))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(songs);
+            }
         }
 
         private void FormAudioPlayer_FormClosing(object sender, FormClosingEventArgs e)
         {
+            ASCIIEncoding encoder = new ASCIIEncoding();
+            FormManager.pipeClient.SendMessage(encoder.GetBytes("DISCONNECT " + FormManager.CurrentUserName));
+            WriteSongs(FormManager.CurrentUserName);
             Application.Exit();
         }
 
@@ -182,7 +219,10 @@ namespace JMCAudioPlayer
                 if (result.Item2)
                 {
                     ListBoxSongs.SelectedIndex = GetLinkedListIndex<Song>(songs, result.Item1);
-                    TextBoxSearch.Clear();
+                    ListBoxSongs.Focus();
+                    curSong = result.Item1;
+                    PlaySong(curSong, 0);
+                    TextBoxSearch.Text = "Enter to search";
                 }
                 else
                 {
@@ -200,6 +240,50 @@ namespace JMCAudioPlayer
         private void FormAudioPlayer_Load(object sender, EventArgs e)
         {
             FormManager.currentForm = this;
+            string fileName = FormManager.CurrentUserName + ".csv";
+            if (!File.Exists(usersSongsPath))
+            {
+                Directory.CreateDirectory(usersSongsPath);
+            }
+
+            fileName = Path.Combine(usersSongsPath, fileName);
+
+            if (File.Exists(fileName))
+            {
+                List<Song> records;
+
+                using (var reader = new StreamReader(fileName))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    records = csv.GetRecords<Song>().ToList();
+                }
+
+                for (int i = 0; i < records.Count(); i++)
+                {
+                    Song song = new Song(records[i].SongURL);
+                    songs.AddLast(song);
+                }
+
+                SortSongs();
+            }
+        }
+
+        private void ListBoxSongs_DoubleClick(object sender, EventArgs e)
+        {
+            int index = ListBoxSongs.Items.IndexOf(ListBoxSongs.SelectedItem);
+            curSong = songs.ElementAt(index);
+            PlaySong(curSong, 0);
+        }
+
+        private void TextBoxSearch_Enter(object sender, EventArgs e)
+        {
+            if (TextBoxSearch.Text.Equals("Enter to search"))
+                TextBoxSearch.Text = "";
+        }
+
+        private void TextBoxSearch_Leave(object sender, EventArgs e)
+        {
+            TextBoxSearch.Text = "Enter to search";
         }
     }
 }

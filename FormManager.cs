@@ -6,12 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+//Student ID: 30031552
+//Student Name: Yang Beng Ng(Ivan)
+//Date: 25/10/2021
+//Description: An advance audio player with login capabilities and song saving
+
 namespace JMCAudioPlayer
 {
     class FormManager : ApplicationContext
     {
-
-        Form formPlayer;
         Form formLogin;
         public static Form currentForm { get; set; }
         public static PipeClient pipeClient = new PipeClient();
@@ -43,6 +46,7 @@ namespace JMCAudioPlayer
 
         private void PipeClient_ServerDisconnected()
         {
+            pipeClient.Disconnect();
             FormReconnect formReconnect = CreateForm<FormReconnect>();
             formReconnect.StartPosition = FormStartPosition.Manual;
             formReconnect.Location = currentForm.Location;

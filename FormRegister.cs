@@ -8,6 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+//Student ID: 30031552
+//Student Name: Yang Beng Ng(Ivan)
+//Date: 25/10/2021
+//Description: An advance audio player with login capabilities and song saving
+
 namespace JMCAudioPlayer
 {
     public partial class FormRegister : Form
@@ -15,10 +20,38 @@ namespace JMCAudioPlayer
         public FormRegister()
         {
             InitializeComponent();
+            FormManager.pipeClient.MessageReceived += PipeClient_MessageReceived;
+        }
+
+        private void PipeClient_MessageReceived(byte[] message)
+        {
+            Invoke(new PipeClient.MessageReceivedHandler(MessageReceived), new object[] { message });
+        }
+
+        void MessageReceived(byte[] message)
+        {
+            ASCIIEncoding encoder = new ASCIIEncoding();
+            string str = encoder.GetString(message, 0, message.Length);
+            Console.WriteLine("Message Received: " + str);
+
+            if (str.Equals("REGISTER_SUCCESS"))
+            {
+                DialogResult userCreated = MessageBox.Show("Thanks for registering!", "User successfully created", MessageBoxButtons.OK);
+                if (userCreated == DialogResult.OK)
+                {
+                    FormManager.pipeClient.MessageReceived -= PipeClient_MessageReceived;
+                    this.Hide();
+                }
+            }
+            else if (str.Equals("REGISTER_FAILED1"))
+            {
+                DialogResult userCreated = MessageBox.Show("User already exist", "User failed created", MessageBoxButtons.OK);
+            }
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
+            FormManager.pipeClient.MessageReceived -= PipeClient_MessageReceived;
             this.Hide();
         }
 
@@ -27,8 +60,7 @@ namespace JMCAudioPlayer
             ASCIIEncoding encoder = new ASCIIEncoding();
 
             FormManager.pipeClient.SendMessage(encoder.GetBytes("REGISTER " + TextBoxUsername.Text + " " + FormManager.GenerateSHA512String(TextBoxPassword.Text)));
-            MessageBox.Show("User Created!");
-            this.Hide();
+            
         }
 
         private void FormRegister_Load(object sender, EventArgs e)

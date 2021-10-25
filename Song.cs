@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Student ID: 30031552
+//Student Name: Yang Beng Ng(Ivan)
+//Date: 25/10/2021
+//Description: An advance audio player with login capabilities and song saving
+
 namespace JMCAudioPlayer
 {
     class Song : IComparable<Song>
@@ -11,6 +16,7 @@ namespace JMCAudioPlayer
         private string songTitle;
         private string[] songArtist;
         private string songURL;
+        private bool unknownArtist = false;
 
         public string SongTitle { get => songTitle; set => songTitle = value; }
         public string SongURL { get => songURL; set => songURL = value; }
@@ -19,11 +25,11 @@ namespace JMCAudioPlayer
 
         public override string ToString()
         {
-            if (SongArtist.Length > 0)
+            if (unknownArtist == true)
             {
-                return SongArtist[0] + " - " + SongTitle;
+                return "Unknown Artist - " + SongTitle;
             }
-            else if (string.IsNullOrEmpty(SongArtist[1]))
+            else
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append(SongArtist[0]);
@@ -33,18 +39,38 @@ namespace JMCAudioPlayer
                 }
                 return sb.ToString() + " - " + SongTitle;
             }
-            else
-            {
-                return "Unknown Artist - " + SongTitle;
-            }
             
         }
+
+        public Song() { }
 
         public Song(string url)
         {
             var tfile = TagLib.File.Create(@url);
-            SongTitle = tfile.Tag.Title;
-            SongArtist = tfile.Tag.AlbumArtists;
+            if (!string.IsNullOrEmpty(tfile.Tag.Title))
+            {
+                SongTitle = tfile.Tag.Title;
+            }
+            else
+            {
+                SongTitle = "Unknown Title";
+            }
+
+            if (tfile.Tag.AlbumArtists != null)
+            {
+                if (tfile.Tag.AlbumArtists.Length == 0)
+                {
+                    unknownArtist = true;
+                }
+                else
+                {
+                    SongArtist = tfile.Tag.AlbumArtists;
+                }
+            }
+            else
+            {
+                unknownArtist = true;
+            }
             SongURL = url;
         }
 

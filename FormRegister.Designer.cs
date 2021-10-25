@@ -115,6 +115,7 @@ namespace JMCAudioPlayer
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FormRegister";
             this.Text = "FormRegister";
             this.Load += new System.EventHandler(this.FormRegister_Load);

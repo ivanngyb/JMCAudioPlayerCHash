@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Student ID: 30031552
+//Student Name: Yang Beng Ng(Ivan)
+//Date: 25/10/2021
+//Description: An advance audio player with login capabilities and song saving
+
 namespace JMCAudioPlayer
 {
     class BinarySearcher

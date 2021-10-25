@@ -5,6 +5,11 @@ using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32.SafeHandles;
 
+//Student ID: 30031552
+//Student Name: Yang Beng Ng(Ivan)
+//Date: 25/10/2021
+//Description: An advance audio player with login capabilities and song saving
+
 namespace JMCAudioPlayer
 {
     class PipeClient
@@ -27,6 +32,10 @@ namespace JMCAudioPlayer
         public delegate void ServerDisconnectedHandler();
 
         public event ServerDisconnectedHandler ServerDisconnected;
+
+        public delegate void StreamReadyHandler();
+
+        public event StreamReadyHandler StreamReady;
 
         const int BUFFER_SIZE = 4096;
 
@@ -94,6 +103,8 @@ namespace JMCAudioPlayer
         void Read()
         {
             stream = new FileStream(handle, FileAccess.ReadWrite, BUFFER_SIZE, true);
+            if (StreamReady != null)
+                StreamReady();
             byte[] readBuffer = new byte[BUFFER_SIZE];
 
             while (true)
@@ -155,6 +166,8 @@ namespace JMCAudioPlayer
 
                 if (ServerDisconnected != null)
                     ServerDisconnected();
+
+
             }
         }
 

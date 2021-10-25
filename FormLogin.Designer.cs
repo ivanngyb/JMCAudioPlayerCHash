@@ -82,6 +82,7 @@ namespace JMCAudioPlayer
             this.TextBoxPassword.Name = "TextBoxPassword";
             this.TextBoxPassword.Size = new System.Drawing.Size(100, 20);
             this.TextBoxPassword.TabIndex = 2;
+            this.TextBoxPassword.UseSystemPasswordChar = true;
             this.TextBoxPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxPassword_KeyPress);
             // 
             // ButtonLogin
@@ -127,6 +128,7 @@ namespace JMCAudioPlayer
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FormLogin";
             this.Text = "JMC Audio Player";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLogin_FormClosing);

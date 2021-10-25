@@ -8,12 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+//Student ID: 30031552
+//Student Name: Yang Beng Ng(Ivan)
+//Date: 25/10/2021
+//Description: An advance audio player with login capabilities and song saving
+
 namespace JMCAudioPlayer
 {
     public partial class FormLogin : Form
     {
-        
-
         public FormLogin()
         {
             InitializeComponent();
@@ -22,8 +25,14 @@ namespace JMCAudioPlayer
                 Console.WriteLine("Server not started");
                 ButtonLogin.Enabled = false;
                 ButtonRegister.Enabled = false;
+                DialogResult failToConnect = MessageBox.Show("Failed to connect to server. Turn on server and restart application", "Fail", MessageBoxButtons.OK);
+                
             }
-            FormManager.pipeClient.MessageReceived += PipeClient_MessageReceived;
+            else
+            {
+                FormManager.pipeClient.MessageReceived += PipeClient_MessageReceived;
+            }
+            
 
         }
 

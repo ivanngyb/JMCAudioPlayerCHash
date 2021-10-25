@@ -48,10 +48,11 @@ namespace JMCAudioPlayer
             // ListBoxSongs
             // 
             this.ListBoxSongs.FormattingEnabled = true;
-            this.ListBoxSongs.Location = new System.Drawing.Point(12, 38);
+            this.ListBoxSongs.Location = new System.Drawing.Point(12, 64);
             this.ListBoxSongs.Name = "ListBoxSongs";
-            this.ListBoxSongs.Size = new System.Drawing.Size(384, 303);
+            this.ListBoxSongs.Size = new System.Drawing.Size(384, 277);
             this.ListBoxSongs.TabIndex = 1;
+            this.ListBoxSongs.DoubleClick += new System.EventHandler(this.ListBoxSongs_DoubleClick);
             // 
             // label1
             // 
@@ -70,13 +71,13 @@ namespace JMCAudioPlayer
             this.LabelCurrentSong.Name = "LabelCurrentSong";
             this.LabelCurrentSong.Size = new System.Drawing.Size(295, 21);
             this.LabelCurrentSong.TabIndex = 2;
-            this.LabelCurrentSong.Text = "Nothing...";
+            this.LabelCurrentSong.Text = "Nothing playing";
             // 
             // ButtonLoadSong
             // 
-            this.ButtonLoadSong.Location = new System.Drawing.Point(289, 406);
+            this.ButtonLoadSong.Location = new System.Drawing.Point(12, 37);
             this.ButtonLoadSong.Name = "ButtonLoadSong";
-            this.ButtonLoadSong.Size = new System.Drawing.Size(100, 50);
+            this.ButtonLoadSong.Size = new System.Drawing.Size(384, 23);
             this.ButtonLoadSong.TabIndex = 3;
             this.ButtonLoadSong.Text = "Load Songs";
             this.ButtonLoadSong.UseVisualStyleBackColor = true;
@@ -98,7 +99,10 @@ namespace JMCAudioPlayer
             this.TextBoxSearch.Name = "TextBoxSearch";
             this.TextBoxSearch.Size = new System.Drawing.Size(100, 20);
             this.TextBoxSearch.TabIndex = 7;
+            this.TextBoxSearch.Text = "Enter to search";
+            this.TextBoxSearch.Enter += new System.EventHandler(this.TextBoxSearch_Enter);
             this.TextBoxSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxSearch_KeyPress);
+            this.TextBoxSearch.Leave += new System.EventHandler(this.TextBoxSearch_Leave);
             // 
             // label3
             // 
@@ -146,7 +150,7 @@ namespace JMCAudioPlayer
             this.ButtonNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ButtonNext.Font = new System.Drawing.Font("Webdings", 25F);
             this.ButtonNext.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ButtonNext.Location = new System.Drawing.Point(148, 406);
+            this.ButtonNext.Location = new System.Drawing.Point(141, 406);
             this.ButtonNext.Name = "ButtonNext";
             this.ButtonNext.Size = new System.Drawing.Size(45, 45);
             this.ButtonNext.TabIndex = 9;
@@ -159,13 +163,13 @@ namespace JMCAudioPlayer
             this.ButtonPlay.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ButtonPlay.FlatAppearance.BorderSize = 0;
             this.ButtonPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonPlay.Font = new System.Drawing.Font("Webdings", 20F);
+            this.ButtonPlay.Font = new System.Drawing.Font("Webdings", 35F);
             this.ButtonPlay.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ButtonPlay.Location = new System.Drawing.Point(63, 391);
+            this.ButtonPlay.Location = new System.Drawing.Point(63, 394);
             this.ButtonPlay.Name = "ButtonPlay";
-            this.ButtonPlay.Size = new System.Drawing.Size(76, 74);
+            this.ButtonPlay.Size = new System.Drawing.Size(70, 69);
             this.ButtonPlay.TabIndex = 9;
-            this.ButtonPlay.Text = "4;";
+            this.ButtonPlay.Text = "4";
             this.ButtonPlay.UseVisualStyleBackColor = false;
             this.ButtonPlay.Click += new System.EventHandler(this.ButtonPlay_Click);
             // 
@@ -173,7 +177,7 @@ namespace JMCAudioPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(401, 491);
+            this.ClientSize = new System.Drawing.Size(406, 491);
             this.Controls.Add(this.ButtonPrevious);
             this.Controls.Add(this.ButtonNext);
             this.Controls.Add(this.ButtonPlay);
@@ -185,8 +189,9 @@ namespace JMCAudioPlayer
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ListBoxSongs);
             this.Controls.Add(this.WindowsMediaPlayer);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FormAudioPlayer";
-            this.Text = "FormAudioPlayer";
+            this.Text = "JMC Audio Player";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAudioPlayer_FormClosing);
             this.Load += new System.EventHandler(this.FormAudioPlayer_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormAudioPlayer_KeyPress);
