@@ -13,6 +13,7 @@ namespace JMCAudioPlayer
 {
     class MergeSorter
     {
+        //Recursively merge sort 
         public Song[] MergeSort(Song[] songs)
         {
             Song[] left;
@@ -24,10 +25,12 @@ namespace JMCAudioPlayer
                 return songs;
             }
 
+            //Split at midpoint
             int midPoint = songs.Length / 2;
 
             left = new Song[midPoint];
 
+            //Checks if it's even or odd to decide midpoint
             if (songs.Length % 2 == 0)
             {
                 right = new Song[midPoint];
@@ -50,10 +53,12 @@ namespace JMCAudioPlayer
                 x++;
             }
 
+            //Recursive sorting
             left = MergeSort(left);
 
             right = MergeSort(right);
 
+            //Merges at the end
             result = Merge(left, right);
             return result;
         }
@@ -71,6 +76,7 @@ namespace JMCAudioPlayer
             {
                 if (indexLeft < left.Length && indexRight < right.Length)
                 {
+                    //Using custom operands in Song class to compare size
                     if (left[indexLeft] <= right[indexRight])
                     {
                         result[indexResult] = left[indexLeft];
@@ -97,6 +103,7 @@ namespace JMCAudioPlayer
                     indexResult++;
                 }
             }
+            //Returns merged array
             return result;
         }
     }

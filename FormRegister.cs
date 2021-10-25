@@ -28,6 +28,7 @@ namespace JMCAudioPlayer
             Invoke(new PipeClient.MessageReceivedHandler(MessageReceived), new object[] { message });
         }
 
+        //Gets message from server and if register is success user gets created
         void MessageReceived(byte[] message)
         {
             ASCIIEncoding encoder = new ASCIIEncoding();
@@ -49,12 +50,14 @@ namespace JMCAudioPlayer
             }
         }
 
+        //Hides form when cancel is clicked
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
             FormManager.pipeClient.MessageReceived -= PipeClient_MessageReceived;
             this.Hide();
         }
 
+        //Attempts to registers user
         private void ButtonRegister_Click(object sender, EventArgs e)
         {
             ASCIIEncoding encoder = new ASCIIEncoding();

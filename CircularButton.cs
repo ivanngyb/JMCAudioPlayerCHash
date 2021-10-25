@@ -10,6 +10,7 @@ namespace JMCAudioPlayer
 {
     class CircularButton : Button
     {
+        //Custom button tool for circle buttons
         protected override void OnPaint(PaintEventArgs pevent)
         {
             GraphicsPath grPath = new GraphicsPath();

@@ -15,6 +15,8 @@ namespace JMCAudioPlayer
 {
     class FormManager : ApplicationContext
     {
+        //FormManager manages the form overall. Holds the pipeclient and handles disconnection
+
         Form formLogin;
         public static Form currentForm { get; set; }
         public static PipeClient pipeClient = new PipeClient();
@@ -28,6 +30,7 @@ namespace JMCAudioPlayer
             }
         }
 
+        //Creates a new form
         public T CreateForm<T>() where T : Form, new()
         {
             var ret = new T();
@@ -53,6 +56,7 @@ namespace JMCAudioPlayer
             formReconnect.ShowDialog();
         }
 
+        //Generates hashing for password
         public static string GenerateSHA512String(string inputString)
         {
             SHA512 sha512 = SHA512Managed.Create();

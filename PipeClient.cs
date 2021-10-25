@@ -26,15 +26,10 @@ namespace JMCAudioPlayer
 
         //Event handling for message receving and server disconnection
         public delegate void MessageReceivedHandler(byte[] message);
-
         public event MessageReceivedHandler MessageReceived;
-
         public delegate void ServerDisconnectedHandler();
-
         public event ServerDisconnectedHandler ServerDisconnected;
-
         public delegate void StreamReadyHandler();
-
         public event StreamReadyHandler StreamReady;
 
         const int BUFFER_SIZE = 4096;
@@ -44,9 +39,7 @@ namespace JMCAudioPlayer
         Thread readThread;
 
         public bool Connected { get; private set; }
-
         public string PipeName { get; private set; }
-
         public bool Connect(string pipename)
         {
             if (Connected)

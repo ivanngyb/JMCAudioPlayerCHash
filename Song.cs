@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
 //Student ID: 30031552
@@ -13,6 +14,7 @@ namespace JMCAudioPlayer
 {
     class Song : IComparable<Song>
     {
+
         private string songTitle;
         private string[] songArtist;
         private string songURL;
@@ -20,9 +22,9 @@ namespace JMCAudioPlayer
 
         public string SongTitle { get => songTitle; set => songTitle = value; }
         public string SongURL { get => songURL; set => songURL = value; }
-
         public string[] SongArtist { get => songArtist; set => songArtist = value; }
 
+        //Override ToString for showing in ListBox
         public override string ToString()
         {
             if (unknownArtist == true)
@@ -46,34 +48,39 @@ namespace JMCAudioPlayer
 
         public Song(string url)
         {
-            var tfile = TagLib.File.Create(@url);
-            if (!string.IsNullOrEmpty(tfile.Tag.Title))
+            //Using TagLib(Third Party Library) to get Metadata from songs
+            if (File.Exists(url))
             {
-                SongTitle = tfile.Tag.Title;
-            }
-            else
-            {
-                SongTitle = "Unknown Title";
-            }
-
-            if (tfile.Tag.AlbumArtists != null)
-            {
-                if (tfile.Tag.AlbumArtists.Length == 0)
+                var tfile = TagLib.File.Create(@url);
+                if (!string.IsNullOrEmpty(tfile.Tag.Title))
                 {
-                    unknownArtist = true;
+                    SongTitle = tfile.Tag.Title;
                 }
                 else
                 {
-                    SongArtist = tfile.Tag.AlbumArtists;
+                    SongTitle = "Unknown Title";
                 }
+
+                if (tfile.Tag.AlbumArtists != null)
+                {
+                    if (tfile.Tag.AlbumArtists.Length == 0)
+                    {
+                        unknownArtist = true;
+                    }
+                    else
+                    {
+                        SongArtist = tfile.Tag.AlbumArtists;
+                    }
+                }
+                else
+                {
+                    unknownArtist = true;
+                }
+                SongURL = url;
             }
-            else
-            {
-                unknownArtist = true;
-            }
-            SongURL = url;
         }
 
+        //IComparable methods for comparing and custom operators
         public int CompareTo(Song obj)
         {
             return SongTitle.CompareTo(obj.SongTitle);

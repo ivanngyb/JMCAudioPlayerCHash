@@ -35,8 +35,10 @@ namespace JMCAudioPlayer
             WindowsMediaPlayer.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(WindowsMediaPlayer_PlayStateChange);
         }
 
+        //Stage change for Windows Media Player
         private void WindowsMediaPlayer_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
         {
+            //If paused or stopped
             if (e.newState == 1 || e.newState == 2)
             {
                 LabelCurrentSong.Text = "Nothing playing";
@@ -44,12 +46,14 @@ namespace JMCAudioPlayer
                 ListBoxSongs.SelectedIndex = -1;
                 isPlaying = false;
             }
+            //If playing
             else if (e.newState == 3)
             {
                 isPlaying = true;
                 ButtonPlay.Text = ";";
                 ListBoxSongs.SelectedIndex = GetLinkedListIndex<Song>(songs, curSong);
             }
+            //When media has ended
             else if (e.newState == 8)
             {
                 BeginInvoke(new Action(() => {
@@ -69,6 +73,8 @@ namespace JMCAudioPlayer
             }
         }
 
+        //Custom method:
+        //Sorts songs on linkedlist
         private void SortSongs()
         {
             Song[] sortedSongs = mergeSorter.MergeSort(songs.ToArray());
@@ -77,6 +83,8 @@ namespace JMCAudioPlayer
             DisplaySong();
         }
 
+        //Custom method:
+        //Displays songs onto list box
         private void DisplaySong()
         {
             ListBoxSongs.Items.Clear();
@@ -86,6 +94,8 @@ namespace JMCAudioPlayer
             }
         }
 
+        //Custom method:
+        //Plays song from position given. If pos = 0 song starts from beginning
         private void PlaySong(Song song, double pos)
         {
             curSong = song;
@@ -95,29 +105,33 @@ namespace JMCAudioPlayer
             LabelCurrentSong.Text = song.ToString();
         }
 
+        //Custom method
+        //Plays and pauses media player
         private void PlayPause()
         {
             try
             {
-
-                if (isPlaying == false)
+                if (songs.Count > 0)
                 {
-                    if (curSong == null)
+                    if (isPlaying == false)
                     {
-                        PlaySong(songs.First(), 0);
-                        isPlaying = true;
+                        if (curSong == null)
+                        {
+                            PlaySong(songs.First(), 0);
+                            isPlaying = true;
+                        }
+                        else
+                        {
+                            PlaySong(curSong, pos);
+                            isPlaying = true;
+                        }
                     }
                     else
                     {
-                        PlaySong(curSong, pos);
-                        isPlaying = true;
+                        pos = WindowsMediaPlayer.Ctlcontrols.currentPosition;
+                        WindowsMediaPlayer.Ctlcontrols.pause();
+                        isPlaying = false;
                     }
-                }
-                else
-                {
-                    pos = WindowsMediaPlayer.Ctlcontrols.currentPosition;
-                    WindowsMediaPlayer.Ctlcontrols.pause();
-                    isPlaying = false;
                 }
 
             }
@@ -128,6 +142,8 @@ namespace JMCAudioPlayer
             }
         }
 
+        //Custom method:
+        //Gets the index of song in linked list
         private int GetLinkedListIndex<Song>(LinkedList<Song> songs, Song item) 
         {
             var count = 0;
@@ -139,6 +155,8 @@ namespace JMCAudioPlayer
             return -1;
         }
 
+        //Custom method:
+        //Writes songs into CSV file
         private void WriteSongs(string user)
         {
             string fileName = user + ".csv";
@@ -157,6 +175,7 @@ namespace JMCAudioPlayer
             }
         }
 
+        //When form closes. Sends a message to server to disconnect user
         private void FormAudioPlayer_FormClosing(object sender, FormClosingEventArgs e)
         {
             ASCIIEncoding encoder = new ASCIIEncoding();
@@ -165,6 +184,7 @@ namespace JMCAudioPlayer
             Application.Exit();
         }
 
+        //Load songs and sorts them before displaying
         private void ButtonLoadSong_Click(object sender, EventArgs e)
         {
             if (OpenFileDialog.ShowDialog() == DialogResult.OK)
@@ -182,11 +202,13 @@ namespace JMCAudioPlayer
             }
         }
 
+        //Play button to play and pause songs
         private void ButtonPlay_Click(object sender, EventArgs e)
         {
             PlayPause();
         }
 
+        //Next button for playing next song in linked list. Goes back to first item when end is reached
         private void ButtonNext_Click(object sender, EventArgs e)
         {
             if (songs.Find(curSong).Next != null)
@@ -199,6 +221,7 @@ namespace JMCAudioPlayer
             }
         }
 
+        //Previous button for playing previous song. Goes to end of list when song is on first item
         private void ButtonPrevious_Click(object sender, EventArgs e)
         {
             if (songs.Find(curSong).Previous != null)
@@ -211,6 +234,7 @@ namespace JMCAudioPlayer
             }
         }
 
+        //Search text box to search for songs
         private void TextBoxSearch_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
@@ -232,11 +256,16 @@ namespace JMCAudioPlayer
             }
         }
 
+        //When space is pressed play/pause songs
         private void FormAudioPlayer_KeyPress(object sender, KeyPressEventArgs e)
         {
-            PlayPause();
+            if (e.KeyChar == (char)Keys.Space)
+            {
+                PlayPause();
+            }
         }
 
+        //On load use third party library to read CSV file
         private void FormAudioPlayer_Load(object sender, EventArgs e)
         {
             FormManager.currentForm = this;
@@ -258,16 +287,30 @@ namespace JMCAudioPlayer
                     records = csv.GetRecords<Song>().ToList();
                 }
 
+                bool songExist = true;
                 for (int i = 0; i < records.Count(); i++)
                 {
                     Song song = new Song(records[i].SongURL);
-                    songs.AddLast(song);
+                    if (File.Exists(song.SongURL))
+                    {
+                        songs.AddLast(song);
+                    }
+                    else
+                    {
+                        songExist = false;
+                    }
                 }
 
                 SortSongs();
+
+                if (songExist == false)
+                {
+                    MessageBox.Show("Some songs were not found on URL and not added to list");
+                }
             }
         }
 
+        //Play song when song is double clicked in list box
         private void ListBoxSongs_DoubleClick(object sender, EventArgs e)
         {
             int index = ListBoxSongs.Items.IndexOf(ListBoxSongs.SelectedItem);
@@ -275,6 +318,7 @@ namespace JMCAudioPlayer
             PlaySong(curSong, 0);
         }
 
+        //Change placeholder text
         private void TextBoxSearch_Enter(object sender, EventArgs e)
         {
             if (TextBoxSearch.Text.Equals("Enter to search"))

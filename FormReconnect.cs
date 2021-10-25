@@ -15,6 +15,7 @@ using System.Windows.Forms;
 
 namespace JMCAudioPlayer
 {
+    //Form handles reconnecting to pipe client
     public partial class FormReconnect : Form
     {
         int timeLeft = 5;
@@ -49,6 +50,11 @@ namespace JMCAudioPlayer
                     LabelCountdown.Text = timeLeft.ToString();
                 }
             }
+        }
+
+        private void ButtonQuit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

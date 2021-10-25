@@ -64,6 +64,7 @@ namespace JMCAudioPlayer
             this.ButtonQuit.TabIndex = 2;
             this.ButtonQuit.Text = "Quit";
             this.ButtonQuit.UseVisualStyleBackColor = true;
+            this.ButtonQuit.Click += new System.EventHandler(this.ButtonQuit_Click);
             // 
             // Timer1
             // 

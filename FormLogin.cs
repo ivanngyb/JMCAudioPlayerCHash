@@ -20,6 +20,7 @@ namespace JMCAudioPlayer
         public FormLogin()
         {
             InitializeComponent();
+            //Attempts to connect to pipe client
             if (!FormManager.pipeClient.Connect("jmcaudio"))
             {
                 Console.WriteLine("Server not started");
@@ -36,11 +37,13 @@ namespace JMCAudioPlayer
 
         }
 
+        //Message receiving handler
         private void PipeClient_MessageReceived(byte[] message)
         {
             Invoke(new PipeClient.MessageReceivedHandler(MessageReceived), new object[] { message });
         }
 
+        //Checks to see if login is correct
         void MessageReceived(byte[] message)
         {
             ASCIIEncoding encoder = new ASCIIEncoding();
@@ -68,6 +71,7 @@ namespace JMCAudioPlayer
             }
         }
 
+        //Opens register form
         private void ButtonRegister_Click(object sender, EventArgs e)
         {
             FormRegister formRegister = new FormRegister();
@@ -76,11 +80,13 @@ namespace JMCAudioPlayer
             formRegister.ShowDialog();
         }
 
+        //Exits application
         private void FormLogin_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
         }
 
+        //Sends login info to server to verify. Password gets hashed before being sent
         private void ButtonLogin_Click(object sender, EventArgs e)
         {
             ASCIIEncoding encoder = new ASCIIEncoding();
@@ -88,6 +94,7 @@ namespace JMCAudioPlayer
             FormManager.pipeClient.SendMessage(encoder.GetBytes("LOGIN " + TextBoxUsername.Text + " " + FormManager.GenerateSHA512String(TextBoxPassword.Text)));
         }
 
+        //If enter is pressed while password text box is selected attempt login
         private void TextBoxPassword_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
